@@ -8421,17 +8421,6 @@ Quando ativado, apresente-se brevemente e faça a primeira pergunta:
 > **O que motivou esta contratação?** É uma reposição, expansão do time ou uma necessidade nova?
 >
 > *(Se preferir, posso sugerir algumas situações comuns para você se identificar.)*` },
-      { name: "Master Dashboard", desc: "Sincroniza relatórios HTML com o Google Drive local e insere o código no Master Dashboard.", category: "projetos", icon: "📑", tags: ["Gestão", "Projetos"], searchIndex: "master dashboard sincroniza relatórios html com o google drive local e insere o código no master dashboard projetos", downloadUrl: "downloads/MasterDashboard.zip", content: `
-Sempre que o usuário solicitar para gerar ou atualizar um novo relatório, planejamento ou roteiro de reunião em HTML, execute este fluxo:
-
-1. Identifique o nome do cliente.
-2. Acesse a pasta correspondente no Google Drive local:
-   \`G:\\Meu Drive\\VENDA+ TECH\\CLIENTES VENDA+ TECH\\ANDAMENTO\\CLIENTE DR. <NOME_DO_CLIENTE>\\\`
-3. Salve o HTML do relatório individual nessa pasta.
-4. Abra o arquivo \`master_dashboard.html\` localizado na pasta principal: \`G:\\Meu Drive\\VENDA+ TECH\\\`.
-5. Localize a tag \`<textarea id="data-<nome_do_arquivo>">\` e injete todo o código HTML atualizado do arquivo gerado no lugar do conteúdo anterior, mantendo a tag de fechamento \`</textarea>\` íntegra.
-6. Certifique-se de que a formatação e métricas no roteiro individual correspondam exatamente às que estão no painel consolidado.
-` },
       { name: "Diagnóstico de Fase e Mapa de Gargalos", desc: "Conduz um diagnóstico guiado da maturidade do negócio — identifica em qual das 5 fases a empresa está (Bebê → Melhor Idade) e mapeia o percentual de maturidade por 8 dimensões universais para localizar o gargalo principal que está limitando o crescimento.", category: "projetos", icon: "📑", tags: ["Gestão", "Projetos"], searchIndex: "diagnóstico de fase e mapa de gargalos conduz um diagnóstico guiado da maturidade do negócio  identifica em qual das 5 fases a empresa está bebê  melhor idade e mapeia o percentual de maturidade por 8 dimensões universais para localizar o gargalo principal que está limitando o crescimento projetos", downloadUrl: "downloads/DiagnsticodeFaseeMapadeGargalos.zip", content: `
 # Diagnóstico de Fase e Mapa de Gargalos
 
@@ -17209,13 +17198,43 @@ All demo HTML files are at \`examples/demos/\` (workflow-relative). Open any in 
       });
     }
 
+    const minimalStopWords = new Set(["quero", "uma", "um", "para", "de", "do", "da", "em", "no", "na", "que", "o", "a", "os", "as", "e", "ou", "com", "por", "como", "eu", "ele", "ela", "eles", "elas", "me", "se", "isso", "isto", "aquilo", "este", "esta", "esses", "essas", "meu", "minha", "seu", "sua", "nosso", "nossa", "vão", "ajudar", "nesse", "neste", "projeto", "skill", "ferramenta", "app", "fazer", "criar", "busco", "preciso", "gostaria"]);
+
     function filterData() {
-      const term = searchInput.value.toLowerCase().trim();
-      const filtered = currentData.filter(t => {
+      const rawTerm = searchInput.value.toLowerCase().trim();
+      
+      if (!rawTerm) {
+        const filtered = currentData.filter(t => currentFilter === "all" || t.category === currentFilter);
+        renderTools(filtered);
+        return;
+      }
+
+      const words = rawTerm.split(/\s+/).filter(w => w.length > 1 && !minimalStopWords.has(w));
+      const searchTerms = words.length > 0 ? words : [rawTerm];
+
+      const scored = currentData.map(t => {
         const matchCategory = currentFilter === "all" || t.category === currentFilter;
-        const matchSearch = t.searchIndex.includes(term) || t.name.toLowerCase().includes(term);
-        return matchCategory && matchSearch;
+        if (!matchCategory) return { tool: t, score: 0 };
+
+        let score = 0;
+        const textToSearch = (t.name + " " + t.desc + " " + (t.searchIndex || "")).toLowerCase();
+        
+        if (textToSearch.includes(rawTerm)) {
+          score += 50;
+        }
+
+        searchTerms.forEach(term => {
+          if (textToSearch.includes(term)) {
+            score += 10;
+          } else if (term.length > 4 && textToSearch.includes(term.substring(0, term.length - 2))) {
+            score += 5;
+          }
+        });
+
+        return { tool: t, score: score };
       });
+
+      const filtered = scored.filter(s => s.score > 0).sort((a, b) => b.score - a.score).map(s => s.tool);
       renderTools(filtered);
     }
 
