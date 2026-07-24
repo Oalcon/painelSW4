@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ADSPARO — Supercharger para Biblioteca de Anúncios & Ad Spy</title>
+  <meta name="description" content="Conheça o AdSparo: a ferramenta definitiva com inteligência artificial para espionar concorrentes e encontrar produtos vencedores direto da biblioteca de anúncios." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-dark:      #0b0c10;
+      --bg-card:      #171923;
+      --bg-card2:     #1f2232;
+      --accent:       #3b82f6;
+      --accent-light: #60a5fa;
+      --accent2:      #ec4899;
+      --accent3:      #10b981;
+      --accent4:      #f43f5e;
+      --text-primary: #f8fafc;
+      --text-muted:   #94a3b8;
+      --border:       rgba(59,130,246,.25);
+      --glow:         0 0 40px rgba(59,130,246,.35);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ===== BACKGROUND BLOBS ===== */
+    .bg-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: .15;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .blob1 { width: 600px; height: 600px; background: #3b82f6; top: -200px; left: -200px; }
+    .blob2 { width: 550px; height: 550px; background: #ec4899; bottom: -150px; right: -150px; }
+    .blob3 { width: 350px; height: 350px; background: #8b5cf6; top: 40%; left: 50%; }
+
+    /* ===== WRAPPER ===== */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      position: relative;
+      padding: 90px 0 70px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(59,130,246,.15);
+      border: 1px solid rgba(59,130,246,.4);
+      border-radius: 999px;
+      padding: 6px 18px;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 28px;
+      animation: fadeDown .6s ease both;
+    }
+    .badge-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent-light);
+      box-shadow: 0 0 8px var(--accent-light);
+      animation: pulse 1.8s infinite;
+    }
+
+    .logo-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -.03em;
+      animation: fadeDown .7s ease .1s both;
+    }
+    .logo-title span {
+      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 40%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header-tagline {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 20px auto 0;
+      line-height: 1.7;
+      animation: fadeDown .8s ease .2s both;
+    }
+    .header-tagline strong { color: var(--accent-light); font-weight: 600; }
+
+    /* ===== SUMMARY CARD ===== */
+    .summary-card {
+      background: linear-gradient(135deg, rgba(59,130,246,.18) 0%, rgba(236,72,153,.10) 100%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 44px;
+      margin: 48px 0 0;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp .8s ease .3s both;
+    }
+    .summary-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(59,130,246,.06), transparent);
+      pointer-events: none;
+    }
+    .summary-label {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 14px;
+    }
+    .summary-text {
+      font-size: 1.08rem;
+      line-height: 1.8;
+      color: #e2e8f0;
+    }
+    .summary-text strong { color: var(--text-primary); font-weight: 600; }
+
+    /* ===== SECTION ===== */
+    section { padding: 80px 0; }
+    .section-tag {
+      display: inline-block;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* ===== ABOUT GRID ===== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 52px;
+    }
+    @media (max-width: 700px) { .about-grid { grid-template-columns: 1fr; } }
+
+    .about-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 16px;
+      padding: 32px;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+    .about-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border);
+      box-shadow: var(--glow);
+    }
+    .about-card-icon {
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+    }
+    .about-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .about-card p {
+      font-size: .93rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* ===== FEATURES ===== */
+    #features { background: rgba(255,255,255,.01); }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 22px;
+      margin-top: 52px;
+    }
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 18px;
+      padding: 30px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(59,130,246,.5);
+      box-shadow: 0 8px 40px rgba(59,130,246,.2);
+    }
+    .feature-icon-wrap {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+    .ic-blue    { background: rgba(59,130,246,.18); }
+    .ic-pink    { background: rgba(236,72,153,.18);  }
+    .ic-green   { background: rgba(16,185,129,.18);  }
+    .ic-indigo  { background: rgba(99,102,241,.18);  }
+    .ic-cyan    { background: rgba(6,182,212,.18);   }
+    .ic-purple  { background: rgba(139,92,246,.18);  }
+
+    .feature-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .feature-card p {
+      font-size: .9rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      flex: 1;
+    }
+    .feature-tag {
+      display: inline-block;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(59,130,246,.2);
+      color: var(--accent-light);
+      width: fit-content;
+    }
+
+    /* ===== AUDIENCE ===== */
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 18px;
+      margin-top: 52px;
+    }
+    .audience-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 16px;
+      padding: 28px 22px;
+      text-align: center;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+    .audience-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(236,72,153,.4);
+      box-shadow: 0 8px 30px rgba(236,72,153,.15);
+    }
+    .audience-card .aud-icon { font-size: 2.4rem; margin-bottom: 14px; }
+    .audience-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .audience-card p { font-size: .85rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* ===== STATS ===== */
+    .stats-section {
+      background: linear-gradient(135deg, rgba(59,130,246,.12) 0%, rgba(236,72,153,.08) 100%);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 56px 48px;
+      margin: 80px 0;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 40px;
+      text-align: center;
+    }
+    .stat-number {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #60a5fa, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .stat-label {
+      font-size: .9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* ===== PRICING ===== */
+    .pricing-wrapper {
+      display: flex;
+      gap: 24px;
+      margin-top: 52px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .pricing-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 20px;
+      padding: 36px 32px;
+      width: 100%;
+      max-width: 380px;
+      position: relative;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+    .pricing-card.featured {
+      border-color: rgba(59,130,246,.5);
+      box-shadow: 0 0 40px rgba(59,130,246,.2);
+      background: linear-gradient(180deg, var(--bg-card) 0%, rgba(59,130,246,0.05) 100%);
+    }
+    .pricing-card:hover {
+      transform: translateY(-5px);
+    }
+    .pricing-badge {
+      position: absolute;
+      top: -14px; left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, #3b82f6, #ec4899);
+      color: #fff;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border-radius: 999px;
+    }
+    .pricing-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .pricing-value {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .pricing-value sup { font-size: 1.2rem; vertical-align: super; }
+    .pricing-period {
+      font-size: .85rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    .pricing-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .pricing-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .9rem;
+      color: #e2e8f0;
+    }
+    .pricing-list li::before {
+      content: '✓';
+      color: var(--accent3);
+      font-weight: 700;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    /* ===== WHY USE ===== */
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 52px;
+    }
+    @media (max-width: 700px) { .why-grid { grid-template-columns: 1fr; } }
+
+    .why-item {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 16px;
+      padding: 26px 24px;
+      transition: transform .25s, border-color .25s;
+    }
+    .why-item:hover {
+      transform: translateY(-4px);
+      border-color: rgba(236,72,153,.35);
+    }
+    .why-num {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      background: rgba(236,72,153,.18);
+      color: var(--accent2);
+      font-weight: 800;
+      font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .why-item h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .why-item p { font-size: .88rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      border-top: 1px solid rgba(255,255,255,.05);
+      padding: 40px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: .88rem;
+      line-height: 1.8;
+    }
+    footer strong { color: var(--accent-light); }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(59,130,246,.4), transparent);
+      margin: 0;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .5; transform: scale(1.4); }
+    }
+
+    /* ===== SCROLL REVEAL (JS) ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 860px) {
+      .summary-card { padding: 28px 24px; }
+      .stats-section { padding: 40px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Blobs -->
+  <div class="bg-blob blob1"></div>
+  <div class="bg-blob blob2"></div>
+  <div class="bg-blob blob3"></div>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="wrapper">
+      <div class="header-badge">
+        <span class="badge-dot"></span>
+        Facebook Ad Library Boost & AI Spy
+      </div>
+
+      <h1 class="logo-title">
+        AD<span>SPARO</span>
+      </h1>
+
+      <p class="header-tagline">
+        A ferramenta com <strong>inteligência artificial</strong> que turbina a biblioteca de anúncios do Facebook, desvendando pixels ativos e criativos vencedores de concorrentes.
+      </p>
+
+      <!-- RESUMO NO CABEÇALHO -->
+      <div class="summary-card">
+        <p class="summary-label">📋 Resumo da Ferramenta</p>
+        <p class="summary-text">
+          O <strong>AdSparo</strong> é um software de inteligência de anúncios (ad spy tool) baseado em inteligência artificial, focado em otimizar e turbinar o uso da <strong>Biblioteca de Anúncios do Facebook (Meta Ad Library)</strong>. A ferramenta opera através de uma extensão de navegador (Chrome) que estende as capacidades nativas do Facebook, permitindo a aplicação de filtros avançados como a detecção de pixels ativos, domínios específicos e volumes de anúncios veiculados. Além disso, a inteligência artificial do AdSparo analisa e pontua anúncios com base em engajamento, permitindo que profissionais de dropshipping e marketing digital encontrem produtos validados e gerem novas ideias de copys e hooks de criativos baseando-se no histórico de mercado dos maiores anunciantes.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <div class="divider"></div>
+
+  <!-- ===== STATS ===== -->
+  <div class="wrapper">
+    <div class="stats-section reveal">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">Chrome Ext.</div>
+          <div class="stat-label">Integração Direta no Navegador</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">AI Powered</div>
+          <div class="stat-label">Classificação de Criativos</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">Histórico</div>
+          <div class="stat-label">Análise de Dados Passados</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">US$69</div>
+          <div class="stat-label">Assinatura Mensal / Pro</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== O QUE É ===== -->
+  <section id="about">
+    <div class="wrapper">
+      <div class="reveal">
+        <span class="section-tag">🔍 Visão Geral</span>
+        <h2 class="section-title">Como o AdSparo transforma sua pesquisa?</h2>
+        <p class="section-sub">
+          Acabe com as limitações da Biblioteca de Anúncios padrão da Meta com dados estratégicos e filtros que ninguém mais vê.
+        </p>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-card reveal">
+          <div class="about-card-icon">⚡</div>
+          <h3>Supercharger de Biblioteca</h3>
+          <p>Adiciona funcionalidades vitais de busca e filtros diretamente dentro da interface da biblioteca de anúncios oficial do Facebook.</p>
+        </div>
+        <div class="about-card reveal">
+          <div class="about-card-icon">🤖</div>
+          <h3>Análise de Criativos por IA</h3>
+          <p>O algoritmo faz o scanner dos anúncios ativos para ranquear o nível de sucesso e escala do criativo com base em dados de veiculação.</p>
+        </div>
+        <div class="about-card reveal">
+          <div class="about-card-icon">💾</div>
+          <h3>Gerenciamento de Mídia</h3>
+          <p>Possui uma nuvem integrada para salvar, favoritar e realizar downloads rápidos de imagens e vídeos para criar novos benchmarks.</p>
+        </div>
+        <div class="about-card reveal">
+          <div class="about-card-icon">🎯</div>
+          <h3>Rastreamento de Pixels</h3>
+          <p>Identifique quais pixels de conversão estão instalados na página de destino dos anúncios investigados para mapear a jornada de compra.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== FUNCIONALIDADES ===== -->
+  <section id="features">
+    <div class="wrapper">
+      <div class="reveal">
+        <span class="section-tag">⚙️ Funcionalidades</span>
+        <h2 class="section-title">Funcionalidades do AdSparo</h2>
+        <p class="section-sub">
+          Recursos robustos desenvolvidos para analistas de tráfego que prezam por precisão analítica.
+        </p>
+      </div>
+
+      <div class="features-grid">
+
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap ic-blue">🔍</div>
+          <h3>Super Filtro de Anúncios</h3>
+          <p>Filtre anúncios por categorias, países, data de criação, formato de mídia (vídeo, carrossel ou estático), idiomas e domínios.</p>
+          <span class="feature-tag">Filtro avançado</span>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap ic-pink">🎯</div>
+          <h3>Mapeamento de Pixels e Checkout</h3>
+          <p>Descubra as ferramentas e pixels usados pelas landing pages concorrentes para descobrir se o criativo tem grande foco em conversão.</p>
+          <span class="feature-tag">Tracking</span>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap ic-green">✍️</div>
+          <h3>Gerador de Copy com IA</h3>
+          <p>Gere novas ideias de copys, títulos e chamadas para ação (CTA) alinhadas com o estilo dos anúncios que mais vendem no nicho.</p>
+          <span class="feature-tag">Copywriter AI</span>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap ic-indigo">🔌</div>
+          <h3>Extensão de Navegador</h3>
+          <p>Tenha acesso a ferramentas de espionagem diretamente na página da biblioteca de anúncios ou navegando pelo site dos concorrentes.</p>
+          <span class="feature-tag">Chrome Extension</span>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap ic-cyan">🖼️</div>
+          <h3>Editor de Imagens Integrado</h3>
+          <p>Edite imagens ou mude as proporções de criativos baixados sem sair da plataforma para agilizar o lançamento das campanhas.</p>
+          <span class="feature-tag">Built-in Editor</span>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap ic-purple">⏳</div>
+          <h3>Dados Históricos de Escala</h3>
+          <p>Visualize anúncios inativos antigos de uma página e acompanhe quais conjuntos de anúncios foram escalados por mais tempo.</p>
+          <span class="feature-tag">Big Data</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== PARA QUEM É ===== -->
+  <section id="audience">
+    <div class="wrapper">
+      <div class="reveal">
+        <span class="section-tag">👥 Público-Alvo</span>
+        <h2 class="section-title">Para quem o AdSparo foi feito?</h2>
+        <p class="section-sub">
+          Desenvolvido para os profissionais que trabalham orientados a dados de performance.
+        </p>
+      </div>
+
+      <div class="audience-grid">
+        <div class="audience-card reveal">
+          <div class="aud-icon">📈</div>
+          <h3>Gestores de Tráfego</h3>
+          <p>Que buscam automatizar e refinar a mineração de criativos que convertem na rede da Meta.</p>
+        </div>
+        <div class="audience-card reveal">
+          <div class="aud-icon">🛍️</div>
+          <h3>Dropshippers</h3>
+          <p>Para mapear os produtos que estão escalando na biblioteca de anúncios rapidamente.</p>
+        </div>
+        <div class="audience-card reveal">
+          <div class="aud-icon">💡</div>
+          <h3>Criadores de Conteúdo</h3>
+          <p>Ideias visuais e de design de grandes marcas para modelar campanhas de marcas locais.</p>
+        </div>
+        <div class="audience-card reveal">
+          <div class="aud-icon">🧠</div>
+          <h3>Copywriters</h3>
+          <p>Para analisar estruturas de headlines e hooks de vídeos de criativos de alta escala.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== POR QUE USAR ===== -->
+  <section id="why">
+    <div class="wrapper">
+      <div class="reveal">
+        <span class="section-tag">✅ Benefícios</span>
+        <h2 class="section-title">Os Diferenciais do AdSparo</h2>
+        <p class="section-sub">
+          Acelere seu processo de criação de ofertas com mais insights técnicos.
+        </p>
+      </div>
+
+      <div class="why-grid">
+        <div class="why-item reveal">
+          <div class="why-num">1</div>
+          <div>
+            <h3>Foco na Meta Ad Library</h3>
+            <p>Aproveite os anúncios oficiais listados no Facebook com a facilidade de filtragem que a plataforma original peca em não oferecer.</p>
+          </div>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-num">2</div>
+          <div>
+            <h3>Identificação de Padrões</h3>
+            <p>Descubra rapidamente quais criativos estão ativos há semanas e entenda as variações visuais que mantém a campanha viável.</p>
+          </div>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-num">3</div>
+          <div>
+            <h3>Rapidez e Otimização</h3>
+            <p>Salve anúncios em pastas organizadas direto do navegador e acesse para baixar tudo de forma rápida sem hacks complexos.</p>
+          </div>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-num">4</div>
+          <div>
+            <h3>IA focada em Conversão</h3>
+            <p>A pontuação e geração de copy ajudam a manter um fluxo de testes constante sem estresse criativo diário.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== PREÇOS ===== -->
+  <section id="pricing">
+    <div class="wrapper">
+      <div class="reveal">
+        <span class="section-tag">💰 Planos e Preços</span>
+        <h2 class="section-title">Investimento</h2>
+        <p class="section-sub">
+          Preços de assinatura oficiais praticados pela plataforma AdSparo.
+        </p>
+      </div>
+
+      <div class="pricing-wrapper">
+        <div class="pricing-card featured reveal">
+          <div class="pricing-badge">Plano Único</div>
+          <h3>Assinatura Pro</h3>
+          <div class="pricing-value"><sup>US$</sup>69</div>
+          <p class="pricing-period">por mês / acesso profissional</p>
+          <ul class="pricing-list">
+            <li>Acesso completo aos filtros avançados</li>
+            <li>Uso ilimitado da extensão de Chrome</li>
+            <li>Rastreamento de Pixels e Checkouts</li>
+            <li>Gerador de Copys com Inteligência Artificial</li>
+            <li>Download ilimitado de imagens/vídeos</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="wrapper">
+      <p>
+        <strong>ADSPARO</strong> — Supercharger de Inteligência para Facebook Ads
+      </p>
+      <p style="margin-top:8px;">
+        Acesse em <strong>adsparo.com</strong> · Extensão de Navegador · AI Ad Spy
+      </p>
+      <p style="margin-top:12px; font-size:.8rem; opacity:.6;">
+        Pesquisa e conteúdo compilados para fins informativos · 2026
+      </p>
+    </div>
+  </footer>
+
+  <!-- ===== SCROLL REVEAL ===== -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WORLDPRESSIT — O Marketplace de Temas e Plugins WordPress Premium (GPL)</title>
+  <meta name="description" content="Conheça o WorldPressIT: o repositório GPL líder de temas premium do WordPress e plugins como Elementor Pro e Astra com preços acessíveis para testes." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-dark:      #05070a;
+      --bg-card:      #0c121a;
+      --bg-card2:     #111d2b;
+      --accent:       #21759b;
+      --accent-light: #007cba;
+      --accent2:      #005a87;
+      --accent3:      #10b981;
+      --text-primary: #f0f9ff;
+      --text-muted:   #94a3b8;
+      --border:       rgba(33,117,155,.25);
+      --glow:         0 0 40px rgba(33,117,155,.35);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ===== BACKGROUND BLOBS ===== */
+    .bg-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: .13;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .blob1 { width: 600px; height: 600px; background: #21759b; top: -200px; left: -200px; }
+    .blob2 { width: 500px; height: 500px; background: #004d73; bottom: -150px; right: -150px; }
+    .blob3 { width: 350px; height: 350px; background: #007cba; top: 40%; left: 55%; }
+
+    /* ===== WRAPPER ===== */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      position: relative;
+      padding: 90px 0 70px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(33,117,155,.15);
+      border: 1px solid rgba(33,117,155,.4);
+      border-radius: 999px;
+      padding: 6px 18px;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 28px;
+      animation: fadeDown .6s ease both;
+    }
+    .badge-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent-light);
+      box-shadow: 0 0 8px var(--accent-light);
+      animation: pulse 1.8s infinite;
+    }
+
+    .logo-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -.03em;
+      animation: fadeDown .7s ease .1s both;
+    }
+    .logo-title span {
+      background: linear-gradient(135deg, #007cba 0%, #21759b 40%, #004d73 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header-tagline {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 20px auto 0;
+      line-height: 1.7;
+      animation: fadeDown .8s ease .2s both;
+    }
+    .header-tagline strong { color: var(--accent-light); font-weight: 600; }
+
+    /* ===== SUMMARY CARD ===== */
+    .summary-card {
+      background: linear-gradient(135deg, rgba(33,117,155,.18) 0%, rgba(0,77,115,.10) 100%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 44px;
+      margin: 48px 0 0;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp .8s ease .3s both;
+    }
+    .summary-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(33,117,155,.06), transparent);
+      pointer-events: none;
+    }
+    .summary-label {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 14px;
+    }
+    .summary-text {
+      font-size: 1.08rem;
+      line-height: 1.8;
+      color: #e0f2fe;
+    }
+    .summary-text strong { color: var(--text-primary); font-weight: 600; }
+
+    /* ===== SECTION ===== */
+    section { padding: 80px 0; }
+    .section-tag {
+      display: inline-block;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* ===== ABOUT GRID ===== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 52px;
+    }
+    @media (max-width: 700px) { .about-grid { grid-template-columns: 1fr; } }
+
+    .about-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 16px;
+      padding: 32px;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+    .about-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border);
+      box-shadow: var(--glow);
+    }
+    .about-card-icon {
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+    }
+    .about-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .about-card p {
+      font-size: .93rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* ===== FEATURES ===== */
+    #features { background: rgba(255,255,255,.01); }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 22px;
+      margin-top: 52px;
+    }
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 18px;
+      padding: 30px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(33,117,155,.5);
+      box-shadow: 0 8px 40px rgba(33,117,155,.2);
+    }
+    .feature-icon-wrap {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+    .ic-blue     { background: rgba(33,117,155,.18); }
+    .ic-cyan     { background: rgba(6,182,212,.18);  }
+    .ic-indigo   { background: rgba(99,102,241,.18);   }
+
+    .feature-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .feature-card p {
+      font-size: .9rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      flex: 1;
+    }
+    .feature-tag {
+      display: inline-block;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(33,117,155,.2);
+      color: var(--accent-light);
+      width: fit-content;
+    }
+
+    /* ===== AUDIENCE ===== */
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 18px;
+      margin-top: 52px;
+    }
+    .audience-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 16px;
+      padding: 28px 22px;
+      text-align: center;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+    .audience-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(33,117,155,.4);
+      box-shadow: 0 8px 30px rgba(33,117,155,.15);
+    }
+    .audience-card .aud-icon { font-size: 2.4rem; margin-bottom: 14px; }
+    .audience-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .audience-card p { font-size: .85rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* ===== STATS ===== */
+    .stats-section {
+      background: linear-gradient(135deg, rgba(33,117,155,.12) 0%, rgba(0,77,115,.08) 100%);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 56px 48px;
+      margin: 80px 0;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 40px;
+      text-align: center;
+    }
+    .stat-number {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #007cba, #004d73);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .stat-label {
+      font-size: .9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      border-top: 1px solid rgba(255,255,255,.05);
+      padding: 40px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: .88rem;
+      line-height: 1.8;
+    }
+    footer strong { color: var(--accent-light); }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(33,117,155,.4), transparent);
+      margin: 0;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .5; transform: scale(1.4); }
+    }
+
+    /* ===== SCROLL REVEAL (JS) ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-blob blob1"></div>
+  <div class="bg-blob blob2"></div>
+  <div class="bg-blob blob3"></div>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="wrapper">
+      <div class="header-badge">
+        <span class="badge-dot"></span>
+        GPL WordPress Premium Marketplace
+      </div>
+
+      <h1 class="logo-title">
+        WORLD<span>PRESSIT</span>
+      </h1>
+
+      <p class="header-tagline">
+        O repositório e marketplace GPL líder de temas premium e plugins WordPress para testes, homologação e desenvolvimento de sites de baixo custo.
+      </p>
+
+      <!-- RESUMO NO CABEÇALHO -->
+      <div class="summary-card">
+        <p class="summary-label">📋 Resumo da Ferramenta</p>
+        <p class="summary-text">
+          O <strong>WorldPressIT</strong> (worldpressit.com) é um marketplace digital que redistribui temas, modelos e plugins WordPress premium sob os termos da licença **GPL (General Public License)**. Sendo muito útil para desenvolvedores, agências em estágio inicial e freelancers testarem novas ferramentas de design (como Elementor Pro, Astra e Divi), a plataforma disponibiliza esses recursos a preços significativamente menores. Contudo, as distribuições GPL não incluem chaves de API para atualizações automáticas ou suporte técnico direto dos desenvolvedores originais.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <div class="divider"></div>
+
+  <!-- ===== STATS ===== -->
+  <div class="wrapper">
+    <div class="stats-section reveal">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">GPL Licensing</div>
+          <div class="stat-label">Redistribuição Legal Autorizada por Termos GPL</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">Discount</div>
+          <div class="stat-label">Temas & Plugins Premium com Preços Reduzidos</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">Testing</div>
+          <div class="stat-label">Excelente Para Projetos de Teste e Staging</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">No API</div>
+          <div class="stat-label">Sem Atualizações Automáticas de Um Clique</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== O QUE É ===== -->
+  <section id="about">
+    <div class="wrapper">
+      <div class="reveal">
+        <span class="section-tag">🔍 Visão Geral</span>
+        <h2 class="section-title">Como o WorldPressIT funciona na prática?</h2>
+        <p class="section-sub">
+          Aproveite a flexibilidade do WordPress premium reduzindo significativamente custos de aquisição em fases de teste de layouts de e-commerce.
+        </p>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-card reveal">
+          <div class="about-card-icon">💻</div>
+          <h3>Grande Catálogo de Temas</h3>
+          <p>Acesse temas renomados como Astra, Divi, WoodMart e Avada prontos para uso em mockups e protótipos de lojas.</p>
+        </div>
+        <div class="about-card reveal">
+          <div class="about-card-icon">🔌</div>
+          <h3>Plugins WordPress Premium</h3>
+          <p>Baixe construtores como o Elementor Pro, plugins de cache, SEO e extensões de WooCommerce por uma fração do preço original.</p>
+        </div>
+        <div class="about-card reveal">
+          <div class="about-card-icon">⚡</div>
+          <h3>Arquivos Verificados</h3>
+          <p>A plataforma assegura varreduras de segurança em seus arquivos redistribuídos para evitar a presença de malwares ocultos.</p>
+        </div>
+        <div class="about-card reveal">
+          <div class="about-card-icon">🔄</div>
+          <h3>Atualizações Manuais</h3>
+          <p>Baixe as novas versões dos arquivos diretamente no painel e atualize seus sites manualmente de forma simples.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="wrapper">
+      <p>
+        <strong>WORLDPRESSIT</strong> — O Marketplace GPL para WordPress Premium
+      </p>
+      <p style="margin-top:8px;">
+        Acesse em <strong>worldpressit.com</strong> · WordPress · Temas · Plugins · GPL
+      </p>
+      <p style="margin-top:12px; font-size:.8rem; opacity:.6;">
+        Pesquisa e conteúdo compilados para fins informativos · 2026
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

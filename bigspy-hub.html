@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BIGSPY HUB — O Maior Banco de Dados de Espionagem de Anúncios Multiplataforma</title>
+  <meta name="description" content="Conheça o BigSpy HUB: a plataforma líder em ad spy multiplataforma cobrindo Facebook, Instagram, TikTok, YouTube, Pinterest e Google Ads." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-dark:      #0d0404;
+      --bg-card:      #1c0c0c;
+      --bg-card2:     #281212;
+      --accent:       #dc2626;
+      --accent-light: #f87171;
+      --accent2:      #e2e8f0;
+      --accent3:      #10b981;
+      --accent4:      #ea580c;
+      --text-primary: #fef2f2;
+      --text-muted:   #94a3b8;
+      --border:       rgba(220,38,38,.25);
+      --glow:         0 0 40px rgba(220,38,38,.35);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ===== BACKGROUND BLOBS ===== */
+    .bg-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: .13;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .blob1 { width: 600px; height: 600px; background: #dc2626; top: -200px; left: -200px; }
+    .blob2 { width: 500px; height: 500px; background: #7f1d1d; bottom: -150px; right: -150px; }
+    .blob3 { width: 350px; height: 350px; background: #f87171; top: 40%; left: 55%; }
+
+    /* ===== WRAPPER ===== */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      position: relative;
+      padding: 90px 0 70px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(220,38,38,.15);
+      border: 1px solid rgba(220,38,38,.4);
+      border-radius: 999px;
+      padding: 6px 18px;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 28px;
+      animation: fadeDown .6s ease both;
+    }
+    .badge-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent-light);
+      box-shadow: 0 0 8px var(--accent-light);
+      animation: pulse 1.8s infinite;
+    }
+
+    .logo-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -.03em;
+      animation: fadeDown .7s ease .1s both;
+    }
+    .logo-title span {
+      background: linear-gradient(135deg, #f87171 0%, #dc2626 40%, #7f1d1d 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header-tagline {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 20px auto 0;
+      line-height: 1.7;
+      animation: fadeDown .8s ease .2s both;
+    }
+    .header-tagline strong { color: var(--accent-light); font-weight: 600; }
+
+    /* ===== SUMMARY CARD ===== */
+    .summary-card {
+      background: linear-gradient(135deg, rgba(220,38,38,.18) 0%, rgba(127,29,29,.10) 100%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 44px;
+      margin: 48px 0 0;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp .8s ease .3s both;
+    }
+    .summary-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(220,38,38,.06), transparent);
+      pointer-events: none;
+    }
+    .summary-label {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 14px;
+    }
+    .summary-text {
+      font-size: 1.08rem;
+      line-height: 1.8;
+      color: #fee2e2;
+    }
+    .summary-text strong { color: var(--text-primary); font-weight: 600; }
+
+    /* ===== SECTION ===== */
+    section { padding: 80px 0; }
+    .section-tag {
+      display: inline-block;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* ===== ABOUT GRID ===== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 52px;
+    }
+    @media (max-width: 700px) { .about-grid { grid-template-columns: 1fr; } }
+
+    .about-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 16px;
+      padding: 32px;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+    .about-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border);
+      box-shadow: var(--glow);
+    }
+    .about-card-icon {
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+    }
+    .about-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .about-card p {
+      font-size: .93rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* ===== FEATURES ===== */
+    #features { background: rgba(255,255,255,.01); }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 22px;
+      margin-top: 52px;
+    }
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 18px;
+      padding: 30px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(220,38,38,.5);
+      box-shadow: 0 8px 40px rgba(220,38,38,.2);
+    }
+    .feature-icon-wrap {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+    .ic-red      { background: rgba(220,38,38,.18); }
+    .ic-orange   { background: rgba(234,88,12,.18);  }
+    .ic-green    { background: rgba(16,185,129,.18);  }
+    .ic-crimson  { background: rgba(190,24,74,.18);   }
+
+    .feature-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .feature-card p {
+      font-size: .9rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      flex: 1;
+    }
+    .feature-tag {
+      display: inline-block;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(220,38,38,.2);
+      color: var(--accent-light);
+      width: fit-content;
+    }
+
+    /* ===== AUDIENCE ===== */
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 18px;
+      margin-top: 52px;
+    }
+    .audience-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 16px;
+      padding: 28px 22px;
+      text-align: center;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+    .audience-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(220,38,38,.4);
+      box-shadow: 0 8px 30px rgba(220,38,38,.15);
+    }
+    .audience-card .aud-icon { font-size: 2.4rem; margin-bottom: 14px; }
+    .audience-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .audience-card p { font-size: .85rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* ===== STATS ===== */
+    .stats-section {
+      background: linear-gradient(135deg, rgba(220,38,38,.12) 0%, rgba(127,29,29,.08) 100%);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 56px 48px;
+      margin: 80px 0;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 40px;
+      text-align: center;
+    }
+    .stat-number {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #f87171, #7f1d1d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .stat-label {
+      font-size: .9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* ===== PRICING ===== */
+    .pricing-wrapper {
+      display: flex;
+      gap: 24px;
+      margin-top: 52px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .pricing-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 20px;
+      padding: 36px 32px;
+      width: 100%;
+      max-width: 280px;
+      position: relative;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+    .pricing-card.featured {
+      border-color: rgba(220,38,38,.5);
+      box-shadow: 0 0 40px rgba(220,38,38,.2);
+      background: linear-gradient(180deg, var(--bg-card) 0%, rgba(220,38,38,0.05) 100%);
+    }
+    .pricing-card:hover {
+      transform: translateY(-5px);
+    }
+    .pricing-badge {
+      position: absolute;
+      top: -14px; left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, #dc2626, #f87171);
+      color: #fff;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border-radius: 999px;
+    }
+    .pricing-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .pricing-value {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .pricing-value sup { font-size: 1.2rem; vertical-align: super; }
+    .pricing-period {
+      font-size: .85rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    .pricing-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .pricing-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .9rem;
+      color: #fee2e2;
+    }
+    .pricing-list li::before {
+      content: '✓';
+      color: var(--accent3);
+      font-weight: 700;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    /* ===== WHY USE ===== */
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 52px;
+    }
+    @media (max-width: 700px) { .why-grid { grid-template-columns: 1fr; } }
+
+    .why-item {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 16px;
+      padding: 26px 24px;
+      transition: transform .25s, border-color .25s;
+    }
+    .why-item:hover {
+      transform: translateY(-4px);
+      border-color: rgba(220,38,38,.35);
+    }
+    .why-num {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      background: rgba(220,38,38,.18);
+      color: var(--accent-light);
+      font-weight: 800;
+      font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .why-item h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .why-item p { font-size: .88rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      border-top: 1px solid rgba(255,255,255,.05);
+      padding: 40px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: .88rem;
+      line-height: 1.8;
+    }
+    footer strong { color: var(--accent-light); }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(220,38,38,.4), transparent);
+      margin: 0;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .5; transform: scale(1.4); }
+    }
+
+    /* ===== SCROLL REVEAL (JS) ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 860px) {
+      .summary-card { padding: 28px 24px; }
+      .stats-section { padding: 40px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Blobs -->
+  <div class="bg-blob blob1"></div>
+  <div class="bg-blob blob2"></div>
+  <div class="bg-blob blob3"></div>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="wrapper">
+      <div class="header-badge">
+        <span class="badge-dot"></span>
+        Multi‑Platform Ad Spy
+      </div>
+
+      <h1 class="logo-title">
+        BIG<span>SPY</span> HUB
+      </h1>
+
+      <p class="header-tagline">
+        O maior banco de dados do planeta para **espionar anúncios multiplataforma** cobrindo Facebook, Instagram, TikTok, Google, YouTube, Pinterest e Yahoo.
+      </p>
+
+      <!-- RESUMO NO CABEÇALHO -->
+      <div class="summary-card">
+        <p class="summary-label">📋 Resumo da Ferramenta</p>
+        <p class="summary-text">
+          O <strong>BigSpy HUB</strong> é uma das ferramentas de <strong>espionagem de anúncios (AdSpy)</strong> mais robustas do mercado digital internacional. Seu principal diferencial competitivo é a cobertura massiva e multiplataforma de redes sociais (Facebook, Instagram, TikTok, Pinterest, YouTube, Google Ads e Yahoo Ads) com um banco de dados de centenas de milhões de anúncios atualizado continuamente. Altamente indicado para dropshippers, afiliados e agências de tráfego, o BigSpy atua como uma biblioteca global, permitindo filtrar por engajamento, tempo de atividade e nichos para descobrir produtos vencedores e estruturar novos criativos baseados em dados reais de ROI dos concorrentes.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <div class="divider"></div>
+
+  <!-- ===== STATS ===== -->
+  <div class="wrapper">
+    <div class="stats-section reveal">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">9+</div>
+          <div class="stat-label">Plataformas de Tráfego Mapeadas</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">2B+</div>
+          <div class="stat-label">Anúncios Catalogados</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">Daily</div>
+          <div class="stat-label">Atualização de Criativos</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">US$9+</div>
+          <div class="stat-label">A partir de / mês (Basic)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== O QUE É ===== -->
+  <section id="about">
+    <div class="wrapper">
+      <div class="reveal">
+        <span class="section-tag">🔍 Visão Geral</span>
+        <h2 class="section-title">Por que usar o BigSpy?</h2>
+        <p class="section-sub">
+          Acesso irrestrito a estratégias de anúncios que movimentam o mercado de e-commerce globalmente.
+        </p>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-card reveal">
+          <div class="about-card-icon">🎯</div>
+          <h3>Espionagem de Anúncios</h3>
+          <p>Mapeie o funil dos seus concorrentes diretos e descubra quais criativos em imagem e vídeo estão obtendo maior escala.</p>
+        </div>
+        <div class="about-card reveal">
+          <div class="about-card-icon">⚡</div>
+          <h3>Mineração Multiplataforma</h3>
+          <p>Não se limite apenas ao Facebook. Encontre tendências no Pinterest Ads, YouTube Ads e TikTok Ads de modo integrado.</p>
+        </div>
+        <div class="about-card reveal">
+          <div class="about-card-icon">🧩</div>
+          <h3>Inspiração de Criativos</h3>
+          <p>Acesse o maior acervo do mundo para desbloquear bloqueios criativos, encontrando as melhores ideias de designs e hooks.</p>
+        </div>
+        <div class="about-card reveal">
+          <div class="about-card-icon">🚀</div>
+          <h3>Validação de Tendências</h3>
+          <p>Veja se um determinado produto está escalando em múltiplos países analisando a quantidade de anúncios criados para ele.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== FUNCIONALIDADES ===== -->
+  <section id="features">
+    <div class="wrapper">
+      <div class="reveal">
+        <span class="section-tag">⚙️ Funcionalidades</span>
+        <h2 class="section-title">Principais Ferramentas</h2>
+        <p class="section-sub">
+          Os recursos analíticos indispensáveis para estruturar novas campanhas lucrativas.
+        </p>
+      </div>
+
+      <div class="features-grid">
+
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap ic-red">🔎</div>
+          <h3>Busca Ultra-Refinada</h3>
+          <p>Filtre anúncios por chamadas para ação (CTAs), palavras-chave, formato de mídia, plataformas, países de alcance e métricas de engajamento.</p>
+          <span class="feature-tag">AdSpy Search</span>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap ic-orange">📈</div>
+          <h3>Filtro de Engajamento Real</h3>
+          <p>Classifique os criativos com base em números de curtidas, compartilhamentos e comentários para focar apenas nas campanhas ativas.</p>
+          <span class="feature-tag">Engagement Filter</span>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap ic-green">📁</div>
+          <h3>Histórico e Download de Mídia</h3>
+          <p>Baixe criativos em imagem e vídeo em alta resolução com um clique diretamente pelo dashboard da plataforma.</p>
+          <span class="feature-tag">Media Exporter</span>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap ic-crimson">💡</div>
+          <h3>Painel de Idéias Quentes</h3>
+          <p>Uma seção exclusiva para exibir os anúncios que mais cresceram em engajamento nas últimas 24 horas no mundo.</p>
+          <span class="feature-tag">Hot Ads Panel</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== PARA QUEM É ===== -->
+  <section id="audience">
+    <div class="wrapper">
+      <div class="reveal">
+        <span class="section-tag">👥 Público-Alvo</span>
+        <h2 class="section-title">A quem o BigSpy ajuda?</h2>
+        <p class="section-sub">
+          Adequado desde o gestor de tráfego iniciante até grandes corporações e marcas consolidadas.
+        </p>
+      </div>
+
+      <div class="audience-grid">
+        <div class="audience-card reveal">
+          <div class="aud-icon">🛍️</div>
+          <h3>Dropshippers</h3>
+          <p>Para garimpar produtos inovadores e ver quais concorrentes estão vendendo com margem lucrativa.</p>
+        </div>
+        <div class="audience-card reveal">
+          <div class="aud-icon">📈</div>
+          <h3>Gestores de Tráfego</h3>
+          <p>Para analisar estratégias de escala, concorrência direta e copy nas maiores redes de anúncios da internet.</p>
+        </div>
+        <div class="audience-card reveal">
+          <div class="aud-icon">💼</div>
+          <h3>Afiliados</h3>
+          <p>Para buscar ideias de campanhas e nichos rentáveis de BlackHat ou WhiteHat sem esgotar o orçamento de testes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== PREÇOS ===== -->
+  <section id="pricing">
+    <div class="wrapper">
+      <div class="reveal">
+        <span class="section-tag">💰 Investimento</span>
+        <h2 class="section-title">Planos e Preços</h2>
+        <p class="section-sub">
+          Acesse a plataforma com opções de custos modulares conforme a sua escala de pesquisa.
+        </p>
+      </div>
+
+      <div class="pricing-wrapper">
+        <div class="pricing-card reveal">
+          <h3>Plano Basic</h3>
+          <div class="pricing-value"><sup>US$</sup>9</div>
+          <p class="pricing-period">por mês</p>
+          <ul class="pricing-list">
+            <li>Pesquisa limitada de anúncios</li>
+            <li>Cobertura apenas no Facebook</li>
+            <li>Downloads limitados de mídia</li>
+            <li>Acesso a filtros básicos de busca</li>
+          </ul>
+        </div>
+
+        <div class="pricing-card featured reveal">
+          <div class="pricing-badge">Mais Recomendado</div>
+          <h3>Plano Pro</h3>
+          <div class="pricing-value"><sup>US$</sup>99</div>
+          <p class="pricing-period">por mês</p>
+          <ul class="pricing-list">
+            <li>Acesso multiplataforma completo</li>
+            <li>Consultas ilimitadas no dashboard</li>
+            <li>Filtros avançados de engajamento</li>
+            <li>Downloads ilimitados de mídia</li>
+            <li>Ideias e tendências diárias em tempo real</li>
+          </ul>
+        </div>
+
+        <div class="pricing-card reveal">
+          <h3>Plano VIP/Group</h3>
+          <div class="pricing-value"><sup>US$</sup>300+</div>
+          <p class="pricing-period">por mês</p>
+          <ul class="pricing-list">
+            <li>Tudo do plano Pro</li>
+            <li>Múltiplos usuários por conta</li>
+            <li>Relatórios e dados de download em massa</li>
+            <li>Suporte dedicado de especialistas</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="wrapper">
+      <p>
+        <strong>BIGSPY HUB</strong> — A Maior Biblioteca Global de Ad Spy Multiplataforma
+      </p>
+      <p style="margin-top:8px;">
+        Acesse em <strong>bigspy.com</strong> · Facebook · Instagram · TikTok · Google · Pinterest · Yahoo
+      </p>
+      <p style="margin-top:12px; font-size:.8rem; opacity:.6;">
+        Pesquisa e conteúdo compilados para fins informativos · 2026
+      </p>
+    </div>
+  </footer>
+
+  <!-- ===== SCROLL REVEAL ===== -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MAKEREELS AI — Automação e Geração de Vídeos Curtos com IA</title>
+  <meta name="description" content="Saiba tudo sobre o MakeReels AI: a ferramenta de inteligência artificial definitiva para gerar Reels, Shorts e TikToks em lote sem precisar aparecer." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-dark:      #0b0407;
+      --bg-card:      #1c0c13;
+      --bg-card2:     #2a121e;
+      --accent:       #ec4899;
+      --accent-light: #f472b6;
+      --accent2:      #f43f5e;
+      --accent3:      #10b981;
+      --text-primary: #fdf2f8;
+      --text-muted:   #94a3b8;
+      --border:       rgba(236,72,153,.25);
+      --glow:         0 0 40px rgba(236,72,153,.35);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ===== BACKGROUND BLOBS ===== */
+    .bg-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: .13;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .blob1 { width: 600px; height: 600px; background: #ec4899; top: -200px; left: -200px; }
+    .blob2 { width: 500px; height: 500px; background: #4c0519; bottom: -150px; right: -150px; }
+    .blob3 { width: 350px; height: 350px; background: #f43f5e; top: 40%; left: 55%; }
+
+    /* ===== WRAPPER ===== */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      position: relative;
+      padding: 90px 0 70px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(236,72,153,.15);
+      border: 1px solid rgba(236,72,153,.4);
+      border-radius: 999px;
+      padding: 6px 18px;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 28px;
+      animation: fadeDown .6s ease both;
+    }
+    .badge-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent-light);
+      box-shadow: 0 0 8px var(--accent-light);
+      animation: pulse 1.8s infinite;
+    }
+
+    .logo-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -.03em;
+      animation: fadeDown .7s ease .1s both;
+    }
+    .logo-title span {
+      background: linear-gradient(135deg, #f472b6 0%, #ec4899 40%, #4c0519 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header-tagline {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 20px auto 0;
+      line-height: 1.7;
+      animation: fadeDown .8s ease .2s both;
+    }
+    .header-tagline strong { color: var(--accent-light); font-weight: 600; }
+
+    /* ===== SUMMARY CARD ===== */
+    .summary-card {
+      background: linear-gradient(135deg, rgba(236,72,153,.18) 0%, rgba(76,5,25,.10) 100%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 44px;
+      margin: 48px 0 0;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp .8s ease .3s both;
+    }
+    .summary-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(236,72,153,.06), transparent);
+      pointer-events: none;
+    }
+    .summary-label {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 14px;
+    }
+    .summary-text {
+      font-size: 1.08rem;
+      line-height: 1.8;
+      color: #fbcfe8;
+    }
+    .summary-text strong { color: var(--text-primary); font-weight: 600; }
+
+    /* ===== SECTION ===== */
+    section { padding: 80px 0; }
+    .section-tag {
+      display: inline-block;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* ===== ABOUT GRID ===== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 52px;
+    }
+    @media (max-width: 700px) { .about-grid { grid-template-columns: 1fr; } }
+
+    .about-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 16px;
+      padding: 32px;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+    .about-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border);
+      box-shadow: var(--glow);
+    }
+    .about-card-icon {
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+    }
+    .about-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .about-card p {
+      font-size: .93rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* ===== FEATURES ===== */
+    #features { background: rgba(255,255,255,.01); }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 22px;
+      margin-top: 52px;
+    }
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 18px;
+      padding: 30px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(236,72,153,.5);
+      box-shadow: 0 8px 40px rgba(236,72,153,.2);
+    }
+    .feature-icon-wrap {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+    .ic-pink    { background: rgba(236,72,153,.18); }
+    .ic-rose    { background: rgba(244,63,94,.18);  }
+    .ic-crimson { background: rgba(190,24,74,.18);   }
+
+    .feature-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .feature-card p {
+      font-size: .9rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      flex: 1;
+    }
+    .feature-tag {
+      display: inline-block;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(236,72,153,.2);
+      color: var(--accent-light);
+      width: fit-content;
+    }
+
+    /* ===== AUDIENCE ===== */
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 18px;
+      margin-top: 52px;
+    }
+    .audience-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 16px;
+      padding: 28px 22px;
+      text-align: center;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+    .audience-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(236,72,153,.4);
+      box-shadow: 0 8px 30px rgba(236,72,153,.15);
+    }
+    .audience-card .aud-icon { font-size: 2.4rem; margin-bottom: 14px; }
+    .audience-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .audience-card p { font-size: .85rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* ===== STATS ===== */
+    .stats-section {
+      background: linear-gradient(135deg, rgba(236,72,153,.12) 0%, rgba(76,5,25,.08) 100%);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 56px 48px;
+      margin: 80px 0;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 40px;
+      text-align: center;
+    }
+    .stat-number {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #f472b6, #4c0519);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .stat-label {
+      font-size: .9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      border-top: 1px solid rgba(255,255,255,.05);
+      padding: 40px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: .88rem;
+      line-height: 1.8;
+    }
+    footer strong { color: var(--accent-light); }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(236,72,153,.4), transparent);
+      margin: 0;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .5; transform: scale(1.4); }
+    }
+
+    /* ===== SCROLL REVEAL (JS) ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-blob blob1"></div>
+  <div class="bg-blob blob2"></div>
+  <div class="bg-blob blob3"></div>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="wrapper">
+      <div class="header-badge">
+        <span class="badge-dot"></span>
+        AI Video Automation & Dark Channels
+      </div>
+
+      <h1 class="logo-title">
+        MAKE<span>REELS AI</span>
+      </h1>
+
+      <p class="header-tagline">
+        Gere automaticamente centenas de Reels, TikToks e Shorts de alta conversão sem precisar aparecer na câmera.
+      </p>
+
+      <!-- RESUMO NO CABEÇALHO -->
+      <div class="summary-card">
+        <p class="summary-label">📋 Resumo da Ferramenta</p>
+        <p class="summary-text">
+          O <strong>MakeReels AI</strong> (makereels.ai) é uma plataforma focada na automação e geração em escala de vídeos verticais curtos (Reels, TikToks e YouTube Shorts). Ideal para criadores de canais "dark" ou "faceless" (onde o proprietário não aparece) e profissionais de tráfego pago, ela converte simples ideias ou notícias de texto em roteiros falados com vozes neurais realistas, seleciona mídias livres de royalties automaticamente e insere legendas estilosas de alto engajamento. A plataforma possibilita manter canais sociais ativos com postagens diárias de forma escalável e sem esforço de gravação.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <div class="divider"></div>
+
+  <!-- ===== STATS ===== -->
+  <div class="wrapper">
+    <div class="stats-section reveal">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">Text‑to‑Reels</div>
+          <div class="stat-label">Geração de Roteiro e Mídia com IA</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">Faceless</div>
+          <div class="stat-label">Criação Pronta Para Canais Dark</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">Voice Gen</div>
+          <div class="stat-label">Locução Neural com Clonagem de Voz</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">Subtitles</div>
+          <div class="stat-label">Legendas Dinâmicas Estilizadas Virais</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== O QUE É ===== -->
+  <section id="about">
+    <div class="wrapper">
+      <div class="reveal">
+        <span class="section-tag">🔍 Visão Geral</span>
+        <h2 class="section-title">Como o MakeReels acelera seu Tráfego Orgânico?</h2>
+        <p class="section-sub">
+          Mantenha seus perfis cheios de conteúdo atualizado sem gastar horas recortando e gravando vídeos diariamente.
+        </p>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-card reveal">
+          <div class="about-card-icon">🚀</div>
+          <h3>Criação Automatizada de Roteiros</h3>
+          <p>Digite apenas um assunto e a inteligência artificial criará uma história ou roteiro comercial persuasivo e dinâmico.</p>
+        </div>
+        <div class="about-card reveal">
+          <div class="about-card-icon">📁</div>
+          <h3>Curadoria de Mídia Integrada</h3>
+          <p>A IA busca e encaixa fotos e vídeos de bancos de alta qualidade para servir de fundo enquanto a voz da IA faz a narração.</p>
+        </div>
+        <div class="about-card reveal">
+          <div class="about-card-icon">🎙️</div>
+          <h3>Vozes Naturais</h3>
+          <p>Narrações prontas com alta clareza de dicção que soam reais e mantêm os telespectadores retidos no vídeo.</p>
+        </div>
+        <div class="about-card reveal">
+          <div class="about-card-icon">💥</div>
+          <h3>Legendas Virais</h3>
+          <p>Gere legendas coloridas e animadas semelhantes às usadas por grandes produtores de conteúdo para engajar audiências.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="wrapper">
+      <p>
+        <strong>MAKEREELS AI</strong> — Automação de Produção Audiovisual Inteligente
+      </p>
+      <p style="margin-top:8px;">
+        Acesse em <strong>makereels.ai</strong> · Reels · Shorts · TikTok
+      </p>
+      <p style="margin-top:12px; font-size:.8rem; opacity:.6;">
+        Pesquisa e conteúdo compilados para fins informativos · 2026
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>

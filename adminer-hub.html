@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ADMINER HUB — Inteligência Competitiva e Mineração de Produtos</title>
+  <meta name="description" content="Conheça o Adminer HUB: a plataforma de espionagem e mineração de produtos focada em dropshipping e e-commerce de alta conversão." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-dark:      #09070f;
+      --bg-card:      #120e1c;
+      --bg-card2:     #161224;
+      --accent:       #8b5cf6;
+      --accent-light: #c084fc;
+      --accent2:      #06b6d4;
+      --accent3:      #10b981;
+      --accent4:      #f43f5e;
+      --accent5:      #eab308;
+      --text-primary: #f5f3ff;
+      --text-muted:   #94a3b8;
+      --border:       rgba(139,92,246,.25);
+      --glow:         0 0 40px rgba(139,92,246,.35);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ===== BACKGROUND BLOBS ===== */
+    .bg-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: .15;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .blob1 { width: 600px; height: 600px; background: #8b5cf6; top: -200px; left: -200px; }
+    .blob2 { width: 550px; height: 550px; background: #06b6d4; bottom: -150px; right: -150px; }
+    .blob3 { width: 350px; height: 350px; background: #ec4899; top: 35%; left: 60%; }
+
+    /* ===== WRAPPER ===== */
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      position: relative;
+      padding: 90px 0 70px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(139,92,246,.15);
+      border: 1px solid rgba(139,92,246,.4);
+      border-radius: 999px;
+      padding: 6px 18px;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 28px;
+      animation: fadeDown .6s ease both;
+    }
+    .badge-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent-light);
+      box-shadow: 0 0 8px var(--accent-light);
+      animation: pulse 1.8s infinite;
+    }
+
+    .logo-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -.03em;
+      animation: fadeDown .7s ease .1s both;
+    }
+    .logo-title span {
+      background: linear-gradient(135deg, #c084fc 0%, #8b5cf6 40%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header-tagline {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 20px auto 0;
+      line-height: 1.7;
+      animation: fadeDown .8s ease .2s both;
+    }
+    .header-tagline strong { color: var(--accent-light); font-weight: 600; }
+
+    /* ===== SUMMARY CARD ===== */
+    .summary-card {
+      background: linear-gradient(135deg, rgba(139,92,246,.18) 0%, rgba(6,182,212,.10) 100%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 44px;
+      margin: 48px 0 0;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp .8s ease .3s both;
+    }
+    .summary-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(139,92,246,.06), transparent);
+      pointer-events: none;
+    }
+    .summary-label {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 14px;
+    }
+    .summary-text {
+      font-size: 1.08rem;
+      line-height: 1.8;
+      color: #e2e8f0;
+    }
+    .summary-text strong { color: var(--text-primary); font-weight: 600; }
+
+    /* ===== SECTION ===== */
+    section { padding: 80px 0; }
+    .section-tag {
+      display: inline-block;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 560px;
+      line-height: 1.7;
+    }
+
+    /* ===== ABOUT GRID ===== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 52px;
+    }
+    @media (max-width: 700px) { .about-grid { grid-template-columns: 1fr; } }
+
+    .about-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 16px;
+      padding: 32px;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+    .about-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border);
+      box-shadow: var(--glow);
+    }
+    .about-card-icon {
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+    }
+    .about-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .about-card p {
+      font-size: .93rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* ===== FEATURES ===== */
+    #features { background: rgba(255,255,255,.01); }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 22px;
+      margin-top: 52px;
+    }
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 18px;
+      padding: 30px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(139,92,246,.5);
+      box-shadow: 0 8px 40px rgba(139,92,246,.2);
+    }
+    .feature-icon-wrap {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+    .ic-violet  { background: rgba(139,92,246,.18); }
+    .ic-cyan    { background: rgba(6,182,212,.18);   }
+    .ic-green   { background: rgba(16,185,129,.18);  }
+    .ic-pink    { background: rgba(236,72,153,.18);  }
+    .ic-amber   { background: rgba(245,158,11,.18);  }
+    .ic-rose    { background: rgba(244,63,94,.18);   }
+    .ic-blue    { background: rgba(59,130,246,.18);  }
+
+    .feature-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .feature-card p {
+      font-size: .9rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      flex: 1;
+    }
+    .feature-tag {
+      display: inline-block;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(139,92,246,.2);
+      color: var(--accent-light);
+      width: fit-content;
+    }
+
+    /* ===== AUDIENCE ===== */
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 18px;
+      margin-top: 52px;
+    }
+    .audience-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 16px;
+      padding: 28px 22px;
+      text-align: center;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+    .audience-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(6,182,212,.4);
+      box-shadow: 0 8px 30px rgba(6,182,212,.15);
+    }
+    .audience-card .aud-icon { font-size: 2.4rem; margin-bottom: 14px; }
+    .audience-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+    .audience-card p { font-size: .85rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* ===== STATS ===== */
+    .stats-section {
+      background: linear-gradient(135deg, rgba(139,92,246,.12) 0%, rgba(6,182,212,.08) 100%);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 56px 48px;
+      margin: 80px 0;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 40px;
+      text-align: center;
+    }
+    .stat-number {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      font-weight: 800;
+      background: linear-gradient(135deg, #c084fc, #06b6d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .stat-label {
+      font-size: .9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* ===== PRICING ===== */
+    .pricing-wrapper {
+      display: flex;
+      gap: 24px;
+      margin-top: 52px;
+      flex-wrap: wrap;
+    }
+    .pricing-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 20px;
+      padding: 36px 32px;
+      flex: 1;
+      min-width: 280px;
+      position: relative;
+      transition: transform .25s, border-color .25s, box-shadow .25s;
+    }
+    .pricing-card.featured {
+      border-color: rgba(139,92,246,.5);
+      box-shadow: 0 0 40px rgba(139,92,246,.2);
+      background: linear-gradient(180deg, var(--bg-card) 0%, rgba(139,92,246,0.05) 100%);
+    }
+    .pricing-card:hover {
+      transform: translateY(-5px);
+    }
+    .pricing-badge {
+      position: absolute;
+      top: -14px; left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, #8b5cf6, #c084fc);
+      color: #fff;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border-radius: 999px;
+    }
+    .pricing-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .pricing-value {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .pricing-value sup { font-size: 1.2rem; vertical-align: super; }
+    .pricing-period {
+      font-size: .85rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+    .pricing-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .pricing-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .9rem;
+      color: #e2e8f0;
+    }
+    .pricing-list li::before {
+      content: '✓';
+      color: var(--accent3);
+      font-weight: 700;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    /* ===== WHY USE ===== */
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 52px;
+    }
+    @media (max-width: 700px) { .why-grid { grid-template-columns: 1fr; } }
+
+    .why-item {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 16px;
+      padding: 26px 24px;
+      transition: transform .25s, border-color .25s;
+    }
+    .why-item:hover {
+      transform: translateY(-4px);
+      border-color: rgba(6,182,212,.35);
+    }
+    .why-num {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      background: rgba(6,182,212,.18);
+      color: var(--accent2);
+      font-weight: 800;
+      font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .why-item h3 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+    .why-item p { font-size: .88rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      border-top: 1px solid rgba(255,255,255,.05);
+      padding: 40px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: .88rem;
+      line-height: 1.8;
+    }
+    footer strong { color: var(--accent-light); }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(139,92,246,.4), transparent);
+      margin: 0;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .5; transform: scale(1.4); }
+    }
+
+    /* ===== SCROLL REVEAL (JS) ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 860px) {
+      .summary-card { padding: 28px 24px; }
+      .stats-section { padding: 40px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Blobs -->
+  <div class="bg-blob blob1"></div>
+  <div class="bg-blob blob2"></div>
+  <div class="bg-blob blob3"></div>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="wrapper">
+      <div class="header-badge">
+        <span class="badge-dot"></span>
+        Mineração de Produtos & Ad Spy
+      </div>
+
+      <h1 class="logo-title">
+        ADMINER<span> HUB</span>
+      </h1>
+
+      <p class="header-tagline">
+        A principal plataforma de <strong>inteligência competitiva</strong> para mineração de produtos e análise de anúncios focada em dropshipping e e-commerce de alta performance.
+      </p>
+
+      <!-- RESUMO NO CABEÇALHO -->
+      <div class="summary-card">
+        <p class="summary-label">📋 Resumo da Ferramenta</p>
+        <p class="summary-text">
+          O <strong>Adminer HUB</strong> (adminer.pro) é uma plataforma especializada em inteligência competitiva e <strong>mineração de produtos vencedores</strong> (winning products) para dropshipping e comércio eletrônico. Ele atua como um spy tool, varrendo e filtrando anúncios de redes sociais e lojas virtuais em tempo real para exibir apenas os produtos com alta demanda e tração de vendas. Com análise guiada por inteligência artificial, filtros detalhados de engajamento e fornecedores, e uma extensão de navegador focada na extração contínua de novos anúncios, o Adminer ajuda lojistas a tomarem decisões baseadas em métricas reais, minimizando custos e riscos de testes desnecessários.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <div class="divider"></div>
+
+  <!-- ===== STATS ===== -->
+  <div class="wrapper">
+    <div class="stats-section reveal">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">Daily</div>
+          <div class="stat-label">Atualização de Tendências</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">AI</div>
+          <div class="stat-label">Análise de Potencial</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">Free Ext.</div>
+          <div class="stat-label">Adminer Extractor</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">R$69+</div>
+          <div class="stat-label">A partir de / mês</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== O QUE É ===== -->
+  <section id="about">
+    <div class="wrapper">
+      <div class="reveal">
+        <span class="section-tag">🔍 Visão Geral</span>
+        <h2 class="section-title">O que é a Adminer?</h2>
+        <p class="section-sub">
+          Um ecossistema estratégico projetado para decifrar os segredos comerciais de e-commerces escaláveis.
+        </p>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-card reveal">
+          <div class="about-card-icon">💎</div>
+          <h3>Mineração Automatizada</h3>
+          <p>Varre continuamente o mercado para encontrar produtos que estão vendendo agora, atualizando as categorias quentes diariamente.</p>
+        </div>
+        <div class="about-card reveal">
+          <div class="about-card-icon">🕵️‍♂️</div>
+          <h3>Espionagem de Funil</h3>
+          <p>Não veja apenas o anúncio: analise a copy de vendas, as imagens, os vídeos e a landing page ou checkout que o concorrente está usando.</p>
+        </div>
+        <div class="about-card reveal">
+          <div class="about-card-icon">⚙️</div>
+          <h3>Dados de Fornecedores e Preços</h3>
+          <p>Identifique a margem de lucro sugerida, veja a faixa de preço praticada e encontre fornecedores confiáveis de forma integrada.</p>
+        </div>
+        <div class="about-card reveal">
+          <div class="about-card-icon">⚡</div>
+          <h3>Otimização de Feed</h3>
+          <p>Use a extensão oficial para transformar seu feed pessoal em um hub exclusivo de pesquisa, filtrando posts orgânicos para ver apenas criativos de concorrentes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== FUNCIONALIDADES ===== -->
+  <section id="features">
+    <div class="wrapper">
+      <div class="reveal">
+        <span class="section-tag">⚙️ Funcionalidades</span>
+        <h2 class="section-title">O Arsenal do Adminer HUB</h2>
+        <p class="section-sub">
+          Tecnologia e curadoria de dados feitas sob medida para impulsionar suas vendas de dropshipping.
+        </p>
+      </div>
+
+      <div class="features-grid">
+
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap ic-violet">🚀</div>
+          <h3>Biblioteca de Produtos Quentes</h3>
+          <p>Acesso rápido aos produtos mais quentes do momento. Classifique por volume de vendas recente, engajamento ou novidade de mercado.</p>
+          <span class="feature-tag">Mineração ativa</span>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap ic-cyan">📊</div>
+          <h3>Filtros de Engajamento</h3>
+          <p>Busque anúncios refinando por curtidas, comentários, compartilhamentos, visualizações, país de origem e data da publicação.</p>
+          <span class="feature-tag">Analytics avançado</span>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap ic-green">🔌</div>
+          <h3>Adminer Extractor Extension</h3>
+          <p>Instale a extensão de navegador para navegar em redes sociais e capturar todos os anúncios ocultos do seu feed automaticamente.</p>
+          <span class="feature-tag">Chrome Extension</span>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap ic-pink">🤖</div>
+          <h3>Pontuação de Potencial de IA</h3>
+          <p>A inteligência artificial analisa a curva de saturação, engajamento e preço para emitir uma nota de viabilidade para o produto.</p>
+          <span class="feature-tag">AI Powered</span>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap ic-amber">📦</div>
+          <h3>Fornecedor Integrado</h3>
+          <p>Links diretos e dados de fornecedores do AliExpress, Shopee ou agentes privados para você fechar a logística rapidamente.</p>
+          <span class="feature-tag">Integrações</span>
+        </div>
+
+        <div class="feature-card reveal">
+          <div class="feature-icon-wrap ic-rose">🏢</div>
+          <h3>Análise de Lojas Concorrentes</h3>
+          <p>Entre no domínio do concorrente para ver quais são os produtos mais vendidos daquela loja específica e quais aplicativos de checkout eles usam.</p>
+          <span class="feature-tag">E-commerce Intelligence</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== PARA QUEM É ===== -->
+  <section id="audience">
+    <div class="wrapper">
+      <div class="reveal">
+        <span class="section-tag">👥 Público-Alvo</span>
+        <h2 class="section-title">A quem se destina a Adminer?</h2>
+        <p class="section-sub">
+          A ferramenta é indispensável para diferentes atuações no ecossistema de vendas digitais.
+        </p>
+      </div>
+
+      <div class="audience-grid">
+        <div class="audience-card reveal">
+          <div class="aud-icon">📦</div>
+          <h3>Dropshippers Iniciantes</h3>
+          <p>Para quem quer começar a testar produtos sem perder dinheiro de caixa com escolhas erradas.</p>
+        </div>
+        <div class="audience-card reveal">
+          <div class="aud-icon">🚀</div>
+          <h3>Lojas de Dropshipping Consolidadas</h3>
+          <p>Para minerar produtos em escala global e expandir o catálogo mantendo o ROI alto.</p>
+        </div>
+        <div class="audience-card reveal">
+          <div class="aud-icon">🎯</div>
+          <h3>Infoprodutores & Afiliados</h3>
+          <p>Ideias de PLR, VSL e criativos que estão convertendo muito no nicho de info.</p>
+        </div>
+        <div class="audience-card reveal">
+          <div class="aud-icon">🎨</div>
+          <h3>Copywriters e Designers</h3>
+          <p>Para extrair modelos validados de vídeos e páginas para estruturar novas copys de vendas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== POR QUE USAR ===== -->
+  <section id="why">
+    <div class="wrapper">
+      <div class="reveal">
+        <span class="section-tag">✅ Benefícios</span>
+        <h2 class="section-title">Por que assinar a Adminer?</h2>
+        <p class="section-sub">
+          Benefícios reais e práticos que aceleram seu processo de testes.
+        </p>
+      </div>
+
+      <div class="why-grid">
+        <div class="why-item reveal">
+          <div class="why-num">1</div>
+          <div>
+            <h3>Precisão no Teste de Produtos</h3>
+            <p>Selecione e suba campanhas apenas de produtos que já demonstraram apelo real no mercado internacional ou nacional.</p>
+          </div>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-num">2</div>
+          <div>
+            <h3>Mineração 10x Mais Rápida</h3>
+            <p>Esqueça a busca manual e o feed infinito. Acesse a aba "Quentes" e encontre dezenas de produtos em poucos minutos.</p>
+          </div>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-num">3</div>
+          <div>
+            <h3>Filtros de Nichos Específicos</h3>
+            <p>Filtre por tecnologias de checkout, plataformas de e-commerce e países de tendência para achar mercados pouco explorados.</p>
+          </div>
+        </div>
+        <div class="why-item reveal">
+          <div class="why-num">4</div>
+          <div>
+            <h3>Interface Limpa e Intuitiva</h3>
+            <p>Fácil navegação, sem complicações técnicas, projetada tanto para quem está começando quanto para profissionais de alta escala.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ===== PREÇOS ===== -->
+  <section id="pricing">
+    <div class="wrapper">
+      <div class="reveal">
+        <span class="section-tag">💰 Planos e Preços</span>
+        <h2 class="section-title">Investimento</h2>
+        <p class="section-sub">
+          Escolha o plano ideal para a sua estrutura de testes de produtos.
+        </p>
+      </div>
+
+      <div class="pricing-wrapper">
+        <div class="pricing-card reveal">
+          <h3>Plano Silver</h3>
+          <div class="pricing-value"><sup>R$</sup>69</div>
+          <p class="pricing-period">por mês (ou trimestral parcelado)</p>
+          <ul class="pricing-list">
+            <li>Acesso básico à biblioteca</li>
+            <li>Filtros padrão de engajamento</li>
+            <li>Visualização de produtos quentes</li>
+            <li>Extensão de extração básica</li>
+          </ul>
+        </div>
+
+        <div class="pricing-card featured reveal">
+          <div class="pricing-badge">Recomendado</div>
+          <h3>Plano Diamond</h3>
+          <div class="pricing-value" style="background:linear-gradient(135deg,#c084fc,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;"><sup>R$</sup>299</div>
+          <p class="pricing-period">por mês (ou trimestral com desconto)</p>
+          <ul class="pricing-list">
+            <li>Acesso irrestrito a todos os produtos</li>
+            <li>Filtros e dados avançados</li>
+            <li>Análises por inteligência artificial</li>
+            <li>Extensão completa + Atualizações exclusivas</li>
+            <li>Suporte prioritário VIP</li>
+          </ul>
+        </div>
+
+        <div class="pricing-card reveal">
+          <h3>Opção Trimestral</h3>
+          <div class="pricing-value" style="font-size:1.6rem;">~20% OFF</div>
+          <p class="pricing-period">Desconto aplicado na assinatura trimestral</p>
+          <ul class="pricing-list">
+            <li>Pagamento integral ou parcelado</li>
+            <li>Todos os recursos do plano escolhido</li>
+            <li>Maior tempo para testar e validar</li>
+            <li>Garantia da plataforma</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="wrapper">
+      <p>
+        <strong>ADMINER HUB</strong> — Inteligência Competitiva para Dropshipping
+      </p>
+      <p style="margin-top:8px;">
+        Acesse em <strong>adminer.pro</strong> · Mineração de Produtos · Ad Spy
+      </p>
+      <p style="margin-top:12px; font-size:.8rem; opacity:.6;">
+        Pesquisa e conteúdo compilados para fins informativos · 2026
+      </p>
+    </div>
+  </footer>
+
+  <!-- ===== SCROLL REVEAL ===== -->
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
