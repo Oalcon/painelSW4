@@ -966,7 +966,7 @@ NÃO use sem pedir:
 - fontes do workspace (Supabase, GitHub, Gmail, Drive) — só se o usuário autorizar e der contexto
 - Write/Edit para criar arquivos — só se o usuário pedir para salvar o plano
 ` },
-      { name: "Legenda Premiere", desc: "Generates AI subtitles as .SRT files for Adobe Premiere Pro using Whisper transcription + semantic segmentation. Cross-platform (macOS + Windows). Trigger with /legenda-premiere or when the user says: 'legenda premiere', 'srt para premiere', 'gerar srt', 'criar legenda pro premiere', 'subtitle for premiere', or any subtitle generation request for a Premiere project.", category: "automacao", icon: "⚡", tags: ["Automação", "Processos"], searchIndex: "legenda premiere generates ai subtitles as srt files for adobe premiere pro using whisper transcription  semantic segmentation crossplatform macos  windows trigger with legendapremiere or when the user says legenda premiere srt para premiere gerar srt criar legenda pro premiere subtitle for premiere or any subtitle generation request for a premiere project automacao", downloadUrl: "downloads/LegendaPremiere.zip", content: `
+      { name: "Legenda Premiere", desc: "Gera legendas com IA em formato .SRT para o Adobe Premiere Pro usando transcrição Whisper + segmentação semântica. Multiplataforma (macOS + Windows). Ative com /legenda-premiere.'legenda premiere', 'srt para premiere', 'gerar srt', 'criar legenda pro premiere', 'subtitle for premiere', or any subtitle generation request for a Premiere project.", category: "automacao", icon: "⚡", tags: ["Automação", "Processos"], searchIndex: "legenda premiere generates ai subtitles as srt files for adobe premiere pro using whisper transcription  semantic segmentation crossplatform macos  windows trigger with legendapremiere or when the user says legenda premiere srt para premiere gerar srt criar legenda pro premiere subtitle for premiere or any subtitle generation request for a premiere project automacao", downloadUrl: "downloads/LegendaPremiere.zip", content: `
 # Legenda Premiere
 
 Full pipeline: Whisper transcription → semantic segmentation → .SRT output for Adobe Premiere Pro.
@@ -2991,7 +2991,7 @@ Sua função principal é atuar como Cientista de Dados focado no cruzamento das
 - Após rodar a lógica, se houver um arquivo alvo para registrar a conclusão (como o \`Relatorio_Historico_Google_Ads.html\`), direcione a edição utilizando o padrão verde (\`#16a34a\`) para sucesso, e amarelo (\`#ca8a04\`) se não entrou em contato.
 - Apresente um resumo limpo da análise antes de gravar no arquivo.
 ` },
-      { name: "cybersecurity-audit", desc: "Full-spectrum security audit — SAST, DAST, SCA, secret scanning, IaC, container hardening, IAM/RBAC review, threat modeling, and API security. Step-by-step investigation with 14 audit phases. Produces triage findings, autofix patches, and a structured report. Source: github.com/cesschneider/cybersec-audit-skill v2.1.0", category: "codigo", icon: "💻", tags: ["Dev", "Tech"], searchIndex: "cybersecurityaudit fullspectrum security audit  sast dast sca secret scanning iac container hardening iamrbac review threat modeling and api security stepbystep investigation with 14 audit phases produces triage findings autofix patches and a structured report source githubcomcesschneidercybersecauditskill v210 codigo", downloadUrl: "downloads/cybersecurity-audit.zip", content: `
+      { name: "cybersecurity-audit", desc: "Auditoria de segurança completa — SAST, DAST, SCA, escaneamento de segredos, IaC, hardening de containers, revisão IAM/RBAC, modelagem de ameaças e segurança de API. Investigação passo a passo em 14 fases.", category: "codigo", icon: "💻", tags: ["Dev", "Tech"], searchIndex: "cybersecurityaudit fullspectrum security audit  sast dast sca secret scanning iac container hardening iamrbac review threat modeling and api security stepbystep investigation with 14 audit phases produces triage findings autofix patches and a structured report source githubcomcesschneidercybersecauditskill v210 codigo", downloadUrl: "downloads/cybersecurity-audit.zip", content: `
 # Cybersecurity Audit Skill
 
 > **Version:** 2.1.0 | **OWASP:** Top 10 2021 + API Top 10 2023 | **Source:** [github.com/cesschneider/cybersec-audit-skill](https://github.com/cesschneider/cybersec-audit-skill)
@@ -3261,7 +3261,7 @@ bandit --version && semgrep --version && checkov --version && trivy --version &&
 - Container base image CVEs: mostly OS layer, prioritize app-layer CVEs
 - alg:none JWT attacks — always verify library forces algorithm validation
 - Compliance does not equal Security — flag both separately` },
-      { name: "DaVinci Resolve Setup", desc: "Sets up the full DaVinci Resolve + Whisper AI integration environment on any computer. Trigger with /davinci-setup or when a user says they want to integrate DaVinci Resolve with G4 OS, set up the subtitle pipeline, install Whisper for DaVinci, or configure the DaVinci scripting environment. Handles macOS (arm64/x86), Windows, and Linux automatically.", category: "codigo", icon: "💻", tags: ["Dev", "Tech"], searchIndex: "davinci resolve setup sets up the full davinci resolve  whisper ai integration environment on any computer trigger with davincisetup or when a user says they want to integrate davinci resolve with g4 os set up the subtitle pipeline install whisper for davinci or configure the davinci scripting environment handles macos arm64x86 windows and linux automatically codigo", downloadUrl: "downloads/DaVinciResolveSetup.zip", content: `
+      { name: "DaVinci Resolve Setup", desc: "Configura o ambiente completo de integração do DaVinci Resolve + Whisper AI em qualquer computador. Lida automaticamente com macOS, Windows e Linux. Ative com /davinci-setup.", category: "codigo", icon: "💻", tags: ["Dev", "Tech"], searchIndex: "davinci resolve setup sets up the full davinci resolve  whisper ai integration environment on any computer trigger with davincisetup or when a user says they want to integrate davinci resolve with g4 os set up the subtitle pipeline install whisper for davinci or configure the davinci scripting environment handles macos arm64x86 windows and linux automatically codigo", downloadUrl: "downloads/DaVinciResolveSetup.zip", content: `
 # DaVinci Resolve Setup
 
 You are setting up a complete DaVinci Resolve + Whisper AI integration environment. This is the foundation for the \`/legenda-reel\` subtitle generation pipeline.
@@ -5274,7 +5274,7 @@ Este check esta implementado diretamente no scaffold (MIN_SIZE_MB = 2.0). O agen
 
 ## Instalacao automatica e auto-reparo
 \`pip install python-pptx lxml pillow -q\` executado automaticamente. Templates baixados do Google Drive quando necessario. Zero acao do usuario.` },
-      { name: "Report FLG", desc: ">", category: "dados", icon: "📊", tags: ["Analytics", "Dados"], searchIndex: "report flg  dados", downloadUrl: "downloads/ReportFLG.zip", content: `
+      { name: "Report FLG", desc: "Gera relatórios avançados de funil e métricas FLG, consolidando dados de analytics e performance para tomada de decisão estratégica.", category: "dados", icon: "📊", tags: ["Analytics", "Dados"], searchIndex: "report flg  dados", downloadUrl: "downloads/ReportFLG.zip", content: `
 # Report FLG One-Pager — Founder Led Growth
 
 ## Objetivo
@@ -5485,7 +5485,7 @@ Você atua como um administrador inteligente de arquivos HTML estáticos. Sua pr
 ### 4. Feedback
 - Comunique sempre ao usuário o sucesso da alteração em tom celebratório e conciso, apontando o link do arquivo modificado.
 ` },
-      { name: "g4-slides", desc: "Build G4-branded HTML slide decks (navy + gold + paper, 1600×900) using the Core-Slides-G4 design system. Use when user asks to create, edit, or publish a G4 slide deck, aula, workshop deck, G4 OS presentation, or custom visual framework. Wraps the three official Órbita libraries (`templates-short-deck/` 52 + `templates-expanded-deck/` 109 + `deck-frameworks/` 18 specialized), the 11-phase Every pipeline, and a daily-sync preflight. One slide at a time, validate visually, then next. Defaults to HTML; PPTX is the legacy exception. v7: replaced with Joao Vitor's canonical SKILL.md content (AULA vs VENDA triage, daily git-sync preflight, templates-short-deck/expanded-deck/deck-frameworks libraries) — supersedes all prior reconstructed versions.", category: "design", icon: "🎨", tags: ["Visual", "Design"], searchIndex: "g4slides build g4branded html slide decks navy  gold  paper 1600×900 using the coreslidesg4 design system use when user asks to create edit or publish a g4 slide deck aula workshop deck g4 os presentation or custom visual framework wraps the three official órbita libraries templatesshortdeck 52  templatesexpandeddeck 109  deckframeworks 18 specialized the 11phase every pipeline and a dailysync preflight one slide at a time validate visually then next defaults to html pptx is the legacy exception v7 replaced with joao vitors canonical skillmd content aula vs venda triage daily gitsync preflight templatesshortdeckexpandeddeckdeckframeworks libraries  supersedes all prior reconstructed versions design", downloadUrl: "downloads/g4-slides.zip", content: `
+      { name: "g4-slides", desc: "Cria apresentações de slides em HTML com a identidade visual do G4 usando o design system Core-Slides-G4. Ideal para aulas, workshops e frameworks visuais personalizados.'s canonical SKILL.md content (AULA vs VENDA triage, daily git-sync preflight, templates-short-deck/expanded-deck/deck-frameworks libraries) — supersedes all prior reconstructed versions.", category: "design", icon: "🎨", tags: ["Visual", "Design"], searchIndex: "g4slides build g4branded html slide decks navy  gold  paper 1600×900 using the coreslidesg4 design system use when user asks to create edit or publish a g4 slide deck aula workshop deck g4 os presentation or custom visual framework wraps the three official órbita libraries templatesshortdeck 52  templatesexpandeddeck 109  deckframeworks 18 specialized the 11phase every pipeline and a dailysync preflight one slide at a time validate visually then next defaults to html pptx is the legacy exception v7 replaced with joao vitors canonical skillmd content aula vs venda triage daily gitsync preflight templatesshortdeckexpandeddeckdeckframeworks libraries  supersedes all prior reconstructed versions design", downloadUrl: "downloads/g4-slides.zip", content: `
 # G4 Slides — HTML-first, Core-Slides-G4 backed, Every 11-phase pipeline
 
 > **You are reading the entry point.** The design system, templates, style.css, AGENTS.md, and build script live in **\`~/Documents/GitHub/Core-Slides-G4\`** (referenced live — this skill does not copy them).
@@ -6570,7 +6570,7 @@ Após fechar o Bloco 5 (Plano de 90 dias), ofereça ao aluno gerar um canvas vis
    - Salve o base64 retornado como \`.jpg\` na mesma pasta, com nome \`canvas-canais-aquisicao-{nome-ou-empresa}.jpg\`
 5. Entregue com um bloco \`filecard\` apontando para o JPG.
 ` },
-      { name: "Fusion Research", desc: "Run a research/strategic-analysis prompt through two parallel subagents (Opus 4.8 + GPT-5.5) and synthesize a fused answer covering consensus, divergences, and gaps. Opt-in only. ~2-4x cost/latency of a normal response.", category: "pesquisa", icon: "🔍", tags: ["Research", "Análise"], searchIndex: "fusion research run a researchstrategicanalysis prompt through two parallel subagents opus 48  gpt55 and synthesize a fused answer covering consensus divergences and gaps optin only 24x costlatency of a normal response pesquisa", downloadUrl: "downloads/FusionResearch.zip", content: `
+      { name: "Fusion Research", desc: "Executa uma análise estratégica através de dois subagentes paralelos e sintetiza uma resposta unificada cobrindo consensos, divergências e lacunas.", category: "pesquisa", icon: "🔍", tags: ["Research", "Análise"], searchIndex: "fusion research run a researchstrategicanalysis prompt through two parallel subagents opus 48  gpt55 and synthesize a fused answer covering consensus divergences and gaps optin only 24x costlatency of a normal response pesquisa", downloadUrl: "downloads/FusionResearch.zip", content: `
 # Fusion Research
 
 Implements the **OpenRouter Fusion / Mixture-of-Agents (MoA)** pattern natively inside G4 OS using parallel subagents. The main session acts as judge and synthesizes the two outputs.
@@ -6803,7 +6803,7 @@ gap is missing willingness-to-pay data by customer segment.
 - Mixture-of-Agents (MoA) research: ~75% of Fusion's quality gain comes from the judge's synthesis, not model diversity.
 - Internal benchmark: 2-model Opus panel matched Claude Fable 5 solo on deep research tasks.
 ` },
-      { name: "MET G4 — Pilares da Metodologia G4", desc: ">", category: "pesquisa", icon: "🔍", tags: ["Research", "Análise"], searchIndex: "met g4  pilares da metodologia g4  pesquisa", downloadUrl: "downloads/METG4PilaresdaMetodologiaG4.zip", content: `
+      { name: "MET G4 — Pilares da Metodologia G4", desc: "Aplica os fundamentos e frameworks da Metodologia G4 (Gestão, Growth, Pessoas e Cultura) para escalar negócios e otimizar processos internos.", category: "pesquisa", icon: "🔍", tags: ["Research", "Análise"], searchIndex: "met g4  pilares da metodologia g4  pesquisa", downloadUrl: "downloads/METG4PilaresdaMetodologiaG4.zip", content: `
 # MET G4 — Pilares da Metodologia G4
 
 Você é um especialista sênior em aprendizagem de alto impacto, combinando dois frameworks:
@@ -7170,7 +7170,7 @@ Antes de entregar qualquer ementa, verificar:
 
 Estratégico antes de tático · Baseado em evidências (cite effect sizes quando relevante) · Orientado para transferência real ao negócio · Linguagem direta e acionável
 ` },
-      { name: "Radar de Mercado G4", desc: ">", category: "pesquisa", icon: "🔍", tags: ["Research", "Análise"], searchIndex: "radar de mercado g4  pesquisa", downloadUrl: "downloads/RadardeMercadoG4.zip", content: `
+      { name: "Radar de Mercado G4", desc: "Monitora o cenário competitivo e tendências de mercado, cruzando dados do setor para identificar oportunidades de growth e ameaças ao negócio.", category: "pesquisa", icon: "🔍", tags: ["Research", "Análise"], searchIndex: "radar de mercado g4  pesquisa", downloadUrl: "downloads/RadardeMercadoG4.zip", content: `
 # Radar de Mercado G4
 
 ## O que esta skill faz
@@ -7446,7 +7446,7 @@ Use Markdown com tabelas e bullets. Apresente o canvas completo ao final com est
 Sempre comece com:
 > "Olá! Sou Alex, seu especialista em Value Proposition Canvas. Para começarmos, descreva seu produto/serviço e o segmento de cliente específico que vamos analisar hoje."
 ` },
-      { name: "Wingfinder", desc: "Especialista no assessment Wingfinder — avalia 4 forças fundamentais: Connections (inteligência social), Thinking (pensamento analítico e criativo), Drive (motivação e propósito) e Resilience (capacidade de recuperação). Conduz avaliação completa de 60 questões de forma conversacional e entrega perfil de forças com interpretação profunda. Ative com /wingfinder ou quando o usuário mencionar 'Wingfinder', 'teste de forças', 'meu perfil de strengths', 'teste Red Bull' ou pedir para descobrir suas forças.", category: "pesquisa", icon: "🔍", tags: ["Research", "Análise"], searchIndex: "wingfinder especialista no assessment wingfinder  avalia 4 forças fundamentais connections inteligência social thinking pensamento analítico e criativo drive motivação e propósito e resilience capacidade de recuperação conduz avaliação completa de 60 questões de forma conversacional e entrega perfil de forças com interpretação profunda ative com wingfinder ou quando o usuário mencionar wingfinder teste de forças meu perfil de strengths teste red bull ou pedir para descobrir suas forças pesquisa", downloadUrl: "downloads/Wingfinder.zip", content: `
+      { name: "Wingfinder", desc: "Especialista no assessment Wingfinder — avalia 4 forças fundamentais: Connections, Thinking, Drive e Resilience. Conduz a avaliação de forma conversacional e entrega interpretação profunda.'Wingfinder', 'teste de forças', 'meu perfil de strengths', 'teste Red Bull' ou pedir para descobrir suas forças.", category: "pesquisa", icon: "🔍", tags: ["Research", "Análise"], searchIndex: "wingfinder especialista no assessment wingfinder  avalia 4 forças fundamentais connections inteligência social thinking pensamento analítico e criativo drive motivação e propósito e resilience capacidade de recuperação conduz avaliação completa de 60 questões de forma conversacional e entrega perfil de forças com interpretação profunda ative com wingfinder ou quando o usuário mencionar wingfinder teste de forças meu perfil de strengths teste red bull ou pedir para descobrir suas forças pesquisa", downloadUrl: "downloads/Wingfinder.zip", content: `
 # Wingfinder — Agente Especialista
 
 Você é um especialista no modelo Wingfinder de avaliação de forças pessoais, desenvolvido pela Red Bull em parceria com psicólogos do King's College London. Conduz a avaliação com rigor psicométrico e interpreta resultados com foco em desenvolvimento prático e aplicado.
@@ -8005,7 +8005,7 @@ Lista de riscos da estrutura atual (ex: "Se pessoa X sair, a operação Y para")
 ## Tom
 
 Mentor de negócios pragmático. Entende que PME não é corporação — estrutura deve servir ao crescimento, não à burocracia. Direto, sem firula.` },
-      { name: "Business Model Canvas — Bia (G4 Traction)", desc: ">", category: "projetos", icon: "📑", tags: ["Gestão", "Projetos"], searchIndex: "business model canvas  bia g4 traction  projetos", downloadUrl: "downloads/BusinessModelCanvasBiaG4Traction.zip", content: `
+      { name: "Business Model Canvas — Bia (G4 Traction)", desc: "Constrói e analisa o Business Model Canvas focado em tração, ajudando a estruturar propostas de valor, canais de aquisição e fontes de receita de forma clara.", category: "projetos", icon: "📑", tags: ["Gestão", "Projetos"], searchIndex: "business model canvas  bia g4 traction  projetos", downloadUrl: "downloads/BusinessModelCanvasBiaG4Traction.zip", content: `
 # Bia — Business Model Canvas (G4 Imersão Traction)
 
 Você é **Bia**, especialista em Estratégia de Negócios e Modelagem pela metodologia **G4 Imersão Traction**. Seu objetivo é ajudar empreendedores a descrever, visualizar, avaliar e repensar seus modelos de negócios de forma prática.
@@ -8935,7 +8935,7 @@ Sempre que o usuário solicitar para procurar e instalar skills via \`/procurado
 5. **Relatório final**:
    - Apresente um resumo claro com as skills encontradas, quais foram instaladas com sucesso e como o usuário pode ativá-las ou utilizá-las no fluxo de trabalho.
 ` },
-      { name: "RH DHO", desc: ">", category: "projetos", icon: "📑", tags: ["Gestão", "Projetos"], searchIndex: "rh dho  projetos", downloadUrl: "downloads/RHDHO.zip", content: `
+      { name: "RH DHO", desc: "Especialista em Desenvolvimento Humano e Organizacional. Ajuda a estruturar planos de carreira, avaliações de desempenho, treinamentos e cultura corporativa.", category: "projetos", icon: "📑", tags: ["Gestão", "Projetos"], searchIndex: "rh dho  projetos", downloadUrl: "downloads/RHDHO.zip", content: `
 # RH DHO — Assistente de Desenvolvimento Humano e Organizacional
 
 Você é um assistente especialista em DHO (Desenvolvimento Humano e Organizacional) com profundo conhecimento em gestão de pessoas, metodologias de desenvolvimento e cultura organizacional. Responda sempre em português do Brasil, com tom profissional e acessível. Seja direto e entregue outputs prontos para uso.
@@ -9034,7 +9034,7 @@ Use os frameworks consolidados de mercado:
 - Quando faltar informação, faça UMA pergunta objetiva antes de prosseguir
 - Se o pedido for ambíguo, apresente a interpretação mais provável e execute
 ` },
-      { name: "RH DP", desc: ">", category: "projetos", icon: "📑", tags: ["Gestão", "Projetos"], searchIndex: "rh dp  projetos", downloadUrl: "downloads/RHDP.zip", content: `
+      { name: "RH DP", desc: "Especialista em Departamento Pessoal. Auxilia com rotinas burocráticas, regras trabalhistas, folha de pagamento e gestão de benefícios e admissões.", category: "projetos", icon: "📑", tags: ["Gestão", "Projetos"], searchIndex: "rh dp  projetos", downloadUrl: "downloads/RHDP.zip", content: `
 # RH DP — Assistente de Departamento Pessoal
 
 Você é um assistente especialista em Departamento Pessoal (DP) brasileiro, com domínio da CLT, legislação trabalhista, obrigações acessórias e rotinas de DP. Responda sempre em português do Brasil, com tom técnico e preciso. Entregue cálculos, checklists e orientações prontos para uso. Sempre indique quando uma situação exige consulta a contador ou advogado trabalhista.
@@ -9790,7 +9790,7 @@ Para cada um dos 10 hooks:
 Após entregar os 10 hooks, pergunte:
 > "Algum chegou perto do que você quer? Posso refinar os top 3 com variações ou ajustar o tom."
 ` },
-      { name: "Humanize Writing", desc: "Rewrite or create prose that sounds natural, specific, and suited to its author, audience, language, and format. Removes formulaic AI patterns without changing facts or flattening the writer's voice.", category: "texto", icon: "📝", tags: ["Copy", "Texto"], searchIndex: "humanize writing rewrite or create prose that sounds natural specific and suited to its author audience language and format removes formulaic ai patterns without changing facts or flattening the writers voice texto", downloadUrl: "downloads/HumanizeWriting.zip", content: `
+      { name: "Humanize Writing", desc: "Reescreve ou cria textos que soam naturais, específicos e adequados ao autor e público. Remove padrões robóticos de IA sem alterar os fatos ou a essência da mensagem.'s voice.", category: "texto", icon: "📝", tags: ["Copy", "Texto"], searchIndex: "humanize writing rewrite or create prose that sounds natural specific and suited to its author audience language and format removes formulaic ai patterns without changing facts or flattening the writers voice texto", downloadUrl: "downloads/HumanizeWriting.zip", content: `
 # Humanize Writing
 
 You are a hands-on editor. Rewrite text so it reads like a real person wrote it for a real audience.
@@ -12734,7 +12734,7 @@ The Chief NEVER writes ads, buys media, or sets up campaigns. The Chief DIAGNOSE
     ];
 
     const workflows = [
-      { name: "Daily Routines", desc: "Configure two daily automations — End-of-Day Summary (updates context files) and Morning Briefing (personalized start-of-day brief). Creates scheduled jobs automatically.", category: "automacao", icon: "⚡", tags: ["Automação", "Processos"], searchIndex: "daily routines configure two daily automations  endofday summary updates context files and morning briefing personalized startofday brief creates scheduled jobs automatically automacao", downloadUrl: "downloads/DailyRoutines.zip", content: `
+      { name: "Daily Routines", desc: "Configura duas automações diárias — Resumo do Final do Dia (atualiza arquivos de contexto) e Briefing Matinal (resumo personalizado para começar o dia). Cria tarefas agendadas automaticamente.", category: "automacao", icon: "⚡", tags: ["Automação", "Processos"], searchIndex: "daily routines configure two daily automations  endofday summary updates context files and morning briefing personalized startofday brief creates scheduled jobs automatically automacao", downloadUrl: "downloads/DailyRoutines.zip", content: `
 # Daily Routines
 
 Sets up two recurring daily automations tailored to the user's tools and workflow:
@@ -15918,7 +15918,7 @@ Estratégico antes de tático · Baseado em evidências (cite effect sizes quand
 - \`/pd-g4\` (skill publicada separadamente) — usado para construir uma aula completa (PPTX institucional) a partir de uma ementa fechada no Modo 4. Ver Fase 0. Snapshot de consulta: \`reference/pd-g4-SKILL-snapshot.md\`.
 - Este workflow substitui integralmente a antiga skill \`met-g4\`, que foi descontinuada como item separado do marketplace para evitar duplicação.
 ` },
-      { name: "Slides", desc: "Create and edit professional HTML presentation slides — outline-first workflow with human review at every stage", category: "design", icon: "🎨", tags: ["Visual", "Design"], searchIndex: "slides create and edit professional html presentation slides  outlinefirst workflow with human review at every stage design", downloadUrl: "downloads/Slides.zip", content: `
+      { name: "Slides", desc: "Cria e edita apresentações de slides profissionais em HTML — fluxo de trabalho estruturado focado em esboço com revisão humana em cada etapa.", category: "design", icon: "🎨", tags: ["Visual", "Design"], searchIndex: "slides create and edit professional html presentation slides  outlinefirst workflow with human review at every stage design", downloadUrl: "downloads/Slides.zip", content: `
 # HTML Slide Creator
 
 Create professional presentation slides as self-contained HTML files. Each slide is a standalone 1280x720 (16:9) HTML page that renders in browsers and can be referenced in chat with \`html-preview\`.
@@ -16302,7 +16302,7 @@ Before generating any HTML, read:
 
 This ensures consistency across all slides and prevents ad-hoc styling that drifts from the design system.
 ` },
-      { name: "G4 OS Design", desc: "HTML-based high-fidelity design system — interactive prototypes, slide decks, motion animations (MP4/GIF+audio), design variations, infographics, and expert critique. Use when building UI mockups, app prototypes, presentations, animations, or any visual design deliverable. Triggers: prototype, iOS mockup, app prototype, slides, PPT, animation, motion design, design variations, infographic, design review, export MP4, export GIF, design direction, style recommendation.", category: "texto", icon: "📝", tags: ["Copy", "Texto"], searchIndex: "g4 os design htmlbased highfidelity design system  interactive prototypes slide decks motion animations mp4gifaudio design variations infographics and expert critique use when building ui mockups app prototypes presentations animations or any visual design deliverable triggers prototype ios mockup app prototype slides ppt animation motion design design variations infographic design review export mp4 export gif design direction style recommendation texto", downloadUrl: "downloads/G4OSDesign.zip", content: `
+      { name: "G4 OS Design", desc: "Design system de alta fidelidade baseado em HTML — protótipos interativos, slides, animações e infográficos. Ideal para criar mockups de UI, e entregáveis visuais com qualidade de especialista.", category: "texto", icon: "📝", tags: ["Copy", "Texto"], searchIndex: "g4 os design htmlbased highfidelity design system  interactive prototypes slide decks motion animations mp4gifaudio design variations infographics and expert critique use when building ui mockups app prototypes presentations animations or any visual design deliverable triggers prototype ios mockup app prototype slides ppt animation motion design design variations infographic design review export mp4 export gif design direction style recommendation texto", downloadUrl: "downloads/G4OSDesign.zip", content: `
 # G4 OS Design
 
 > HTML is your tool. You are a designer — not a programmer. Embody the right expert for each task: animator when animating, slide designer when making slides, UX designer when prototyping. The user is your manager; you deliver thoughtful, well-crafted design work.
